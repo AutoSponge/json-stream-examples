@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
     while (connected) {
       await a.delay(Math.random() * 100 | 0) // simulated delay
       req.connection.removeAllListeners('close')
-      let { value, done } = iterable.next()
+      let { value, done } = await iterable.next()
       if (done === true) {
         return true
       }
