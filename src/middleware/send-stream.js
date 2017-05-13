@@ -5,8 +5,6 @@ module.exports = (req, res, next) => {
     let ready
     let connected = true
     while (connected) {
-      await a.delay(Math.random() * 100 | 0) // simulated delay
-      req.connection.removeAllListeners('close')
       let { value, done } = await iterable.next()
       if (done === true) {
         return true
@@ -17,6 +15,7 @@ module.exports = (req, res, next) => {
           a.event(res, 'drain'),
           a.event(req.connection, 'close').then(() => (connected = false))
         ])
+        req.connection.removeAllListeners('close')
       }
     }
   }
